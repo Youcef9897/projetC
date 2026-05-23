@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include "raylib.h"
 #include "graphe.h"
 #include "mission1.h"
 #include "mission2.h"
 #include "mission3.h"
 #include "simulation.h"
+#include "affichage.h"
 #include <time.h>
 
 
@@ -15,6 +17,7 @@ void afficherMenuPrincipal() {
     printf("4. Mission 2 : placement des caméras\n");
     printf("5. Mission 3 : inventaire de la police\n");
     printf("6. Simulation complete\n");
+    printf("7. Affichage graphique\n");
     printf("0. Quitter\n");
     printf("Votre choix : ");
 }
@@ -388,16 +391,20 @@ do {
             break;
 
         case 4:
-            placerCam(g);
+            placerUneCamera(g);
             afficherCameras(g);
             break;
         
         case 5:
             mission3Inventaire();
             break;
-        
+
         case 6:
             simulationComplete(g, v0, 10);
+            break;
+
+        case 7:
+            lancerAffichageGraphique(g);
             break;
 
         case 0:

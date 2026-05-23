@@ -4,8 +4,9 @@
 #include <stdbool.h>
 #include "graphe.h"
 
-void placerCam(Graphe *graphe);
+bool placerUneCamera(Graphe *graphe);
 bool ArcsTousCouverts(Graphe *graphe);
+void placerCam(Graphe *graphe);
 void afficherCameras(Graphe *graphe);
 
 #endif

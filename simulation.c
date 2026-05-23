@@ -113,3 +113,4 @@ void simulationComplete(Graphe *graphe, Sommet *basePolice, int nbToursMax) {
 
     printf("\nSimulation terminee : suspect non capture apres %d tours.\n", nbToursMax);
 }
+
