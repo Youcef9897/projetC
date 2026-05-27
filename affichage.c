@@ -129,7 +129,7 @@ static Rectangle bouton(float x, float y, float w, float h, const char *texte) {
     Color c = CheckCollisionPointRec(GetMousePosition(), r) ? LIGHTGRAY : RAYWHITE;
 
     DrawRectangleRounded(r, 0.15f, 8, c);
-    DrawRectangleRoundedLines(r, 0.15f, 8, 2, DARKGRAY);
+    DrawRectangleRoundedLines(r, 0.15f, 8, DARKGRAY);
     DrawText(texte, x + 18, y + 13, 20, BLACK);
 
     return r;
