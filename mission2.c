@@ -6,7 +6,6 @@ static bool arcEstCouvert(Sommet *source, Arc *arc) {
     return source->CamPlace || arc->destination->CamPlace;
 }
 
-
 bool ArcsTousCouverts(Graphe *graphe) {
     Sommet *s = graphe->listeSommets;
 
@@ -17,7 +16,6 @@ bool ArcsTousCouverts(Graphe *graphe) {
             if (!arcEstCouvert(s, arc)) {
                 return false;
             }
-
             arc = arc->suivant;
         }
 
@@ -27,52 +25,63 @@ bool ArcsTousCouverts(Graphe *graphe) {
     return true;
 }
 
-static int compterArcsNonCouverts(Sommet *s) {
+static int compterArcsCouvertsSiCamera(Sommet *candidat) {
     int compteur = 0;
-    Arc *arc = s->routes;
+    Arc *arc = candidat->routes;
 
     while (arc != NULL) {
-        if (!arcEstCouvert(s, arc)) {
+        if (!arcEstCouvert(candidat, arc)) {
             compteur++;
         }
-
         arc = arc->suivant;
     }
 
     return compteur;
 }
 
+bool placerUneCamera(Graphe *graphe) {
+    Sommet *meilleurSommet = NULL;
+    int maxArcs = 0;
+
+    if (ArcsTousCouverts(graphe)) {
+        return false;
+    }
+
+    Sommet *s = graphe->listeSommets;
+
+    while (s != NULL) {
+        if (!s->CamPlace) {
+            int nb = compterArcsCouvertsSiCamera(s);
+
+            if (nb > maxArcs) {
+                maxArcs = nb;
+                meilleurSommet = s;
+            }
+        }
+
+        s = s->suivant;
+    }
+
+    if (meilleurSommet == NULL || maxArcs == 0) {
+        return false;
+    }
+
+    meilleurSommet->CamPlace = true;
+
+    printf("Camera placee sur : V%d - %s\n",
+           meilleurSommet->ID,
+           meilleurSommet->nom);
+
+    return true;
+}
+
 void placerCam(Graphe *graphe) {
     printf("\n===== MISSION 2 : PLACEMENT DES CAMERAS =====\n");
 
     while (!ArcsTousCouverts(graphe)) {
-        Sommet *meilleurSommet = NULL;
-        int maxArcs = -1;
-
-        Sommet *s = graphe->listeSommets;
-
-        while (s != NULL) {
-            if (!s->CamPlace) {
-                int nb = compterArcsNonCouverts(s);
-
-                if (nb > maxArcs) {
-                    maxArcs = nb;
-                    meilleurSommet = s;
-                }
-            }
-
-            s = s->suivant;
-        }
-
-        if (meilleurSommet == NULL || maxArcs <= 0) {
+        if (!placerUneCamera(graphe)) {
             break;
         }
-
-        meilleurSommet->CamPlace = true;
-
-        printf("Camera placee sur : V%d - %s\n",
-               meilleurSommet->ID,
-               meilleurSommet->nom);
     }
 
     if (ArcsTousCouverts(graphe)) {

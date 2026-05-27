@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include "raylib.h"
 #include "graphe.h"
 #include "mission1.h"
 #include "mission2.h"
 #include "mission3.h"
 #include "simulation.h"
+#include "affichage.h"
 #include <time.h>
 
 
@@ -15,6 +17,7 @@ void afficherMenuPrincipal() {
     printf("4. Mission 2 : placement des caméras\n");
     printf("5. Mission 3 : inventaire de la police\n");
     printf("6. Simulation complete\n");
+    printf("7. Affichage graphique\n");
     printf("0. Quitter\n");
     printf("Votre choix : ");
 }
@@ -32,7 +35,7 @@ int main() {
     Graphe *g = creerGraphe(30); // Création d'un graphe avec 30 sommets (places)
 
     Sommet *v0  = creerSommet(0, "Plaza Mariano Moreno");
-    Sommet *v1  = creerSommet(1, "Plaza General San Martin");
+    Sommet *v1  = creerSommet(1, "Plaza General San ");
     Sommet *v2  = creerSommet(2, "Plaza Juan J. Paso");
     Sommet *v3  = creerSommet(3, "Plaza Maximo Paz");
     Sommet *v4  = creerSommet(4, "Plaza Islas Malvinas");
@@ -41,7 +44,7 @@ int main() {
     Sommet *v7  = creerSommet(7, "Plaza Manuel Belgrano");
     Sommet *v8  = creerSommet(8, "Plaza General Olazabal");
     Sommet *v9  = creerSommet(9, "Plaza Miguel de Azcuenaga");  
-    Sommet *v10 = creerSommet(10, "Plaza General Martin Miguel de Guemes");
+    Sommet *v10 = creerSommet(10, "Plaza General Martin Miguel");
     Sommet *v11 = creerSommet(11, "Plaza Valentin Alsina");
     Sommet *v12 = creerSommet(12, "Plaza Adolfo Alsina");
     Sommet *v13 = creerSommet(13, "Plaza Sarmiento");
@@ -388,16 +391,20 @@ do {
             break;
 
         case 4:
-            placerCam(g);
+            placerUneCamera(g);
             afficherCameras(g);
             break;
         
         case 5:
             mission3Inventaire();
             break;
-        
+
         case 6:
             simulationComplete(g, v0, 10);
+            break;
+
+        case 7:
+            lancerAffichageGraphique(g);
             break;
 
         case 0:
